@@ -1,46 +1,49 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
-class App extends Component{
 
-  constructor(props){
-    super(props);
-    this.state= {
-      nome:'',
-      email:'',
-      senha:''
-    };
-    this.cadastrar = this.cadastrar.bind(this);
-  }
+function App() {
 
-  cadastrar(){
-    alert('cadastrou!')
-  }
+  const [tarefas, setTarefas] = useState([]);
+  const [input, setInput] = useState('');
 
-  render(){
-    return(
-      <div>
-        <h3>Teste de Formulario</h3>
 
-        <form name='form-input' onSubmit={this.cadastrar}>
+  useEffect(()=>{
+    const tarefasStorage = localStorage.getItem('tarefas');
 
-          <label>Nome:</label> 
-          <input type='text' name='nome' placeholder='Digite o seu nome' 
-                onChange={(e) => this.setState({senha: e.target.value})} /><br/>
+    if(tarefasStorage){
+      setTarefas(JSON.parse(tarefasStorage));
+    }
 
-          <label>E-mail:</label> 
-          <input type='email' name='email' placeholder='example@gmail.com' 
-                onChange={(e) => this.setState({senha: e.target.value})} /><br/>
+  }, []);
 
-          <label>Senha:</label> 
-          <input type='password' name='senha' placeholder='Digite a sua senha' 
-                  onChange={(e) => this.setState({senha: e.target.value})} /><br/>
-          <button type='submit'>Cadastrar</button>
-        </form>
-        
-      </div>
-    )
-  }
+
+  useEffect(()=> {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+  }, [tarefas]);
+
+
+  const handleAdd = useCallback(() => {
+    setTarefas([...tarefas, input]);
+    setInput('');
+  }, [input, tarefas]);
+
+  const totalTarefas = useMemo(()=> tarefas.length, [tarefas]);
+
+  return (
+    <div>
+
+      <ul>
+        {tarefas.map(tarefa => (
+          <li key={tarefa}>{tarefa}</li>
+        ))}
+      </ul>
+      <br/>    
+      <strong>Você tem {totalTarefas} tarefas!</strong><br/>
+      <input type="text" value={input} onChange={e => setInput(e.target.value)}/>    
+      <button type="button" onClick={handleAdd}>Adicionar</button>
+
+    </div>
+  );
 }
 
 export default App;

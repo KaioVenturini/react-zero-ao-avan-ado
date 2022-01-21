@@ -230,7 +230,69 @@ for atualizado ele faz alguma coisa.
 shouldComponentUptade: esse ciclo retorna um true e um false, como se perguntasse se algum componente
 deveria ser atualizado, ou ate mesmo uma mudança de state.*/
 
+///////////////////////////////////////
 
+/* React Hooks
+
+	Inicialmente, os react hooks, foram criados para reduzir o uso de
+linhas no codigo, deixando-o menos verboso, comprido etc...mas também
+contendo o uso de states ou props.
+	Antes dos hooks, se usava class components, com os hooks, é possivel
+o uso de funcion(){};
+
+useState do Hooks
+
+
+Vamos ao exemplo:
+
+import React, { useState } from 'react';
+ 
+function App() {
+ 
+  // Declarar uma nova variável de state, na qual chamaremos de "contador"
+  const [contador, setContador] = useState(0);
+ 
+  return (
+    <div>
+      <p>You clicked {contador} times</p>
+      <button onClick={() => setContador(contador + 1)}>
+          Aumentar
+      </button>
+    </div>
+  );
+}
+
+
+Vamos destrinchar isso aqui:
+
+ const [contador, setContador] = useState(0);
+- Criamos um estado chamado de contador e onde o valor padrão ele começa com 0
+
+- Quando queremos alterar o valor do state contador nós usamos o setContador()
+
+
+
+- Como no exemplo acima quando você clicar no botão ele vai mudar o valor do contador para o valor que ele tem + 1 (ou seja se o valor começa em 0 vai ser 0 + 1 e 
+    quando o valor tiver em 1 vai ser 1 + 1 e por ai em diante).
+
+/////////////////////////////////////////////
+
+useEffect: basicamente, ele substitui todos os ciclos de vida dos components, segundo o curso, utilizando-o como o componentDidMounth ou DidUpdate etc...,.
+Ele recebe 2 paramentros, a função (pode ser uma arrow funtion), e depois chama os estados dentro das arrays.
+
+useMemo: Uma das possibilidades com o React Hooks é o useMemo, que utiliza uma técnica já conhecida chamada memoization, que consiste em guardar o valor de 
+retorno de uma função a partir dos valores de entrada (Parâmetros). Ou seja, se uma função de soma recebe os parâmetros 2 e 3 e retorna 5, esses valores 
+serão armazenados e, quando essa função for chamada com os mesmos parâmetros, ela não precisará refazer o cálculo para obter o valor de retorno, 
+já que este estará armazenado.
+
+useCallback: diferente do memo que retorna um valor unico, o callback pode retornar uma função inteira, e pode servir como a função handleAdd, que esta nesse
+projeto. Quando chamada pelo input a handleAdd funciona deletando a função antiga e recria com os novos itens, gastanto muito processamento. Com o callback ele
+so recriará se for necessario, ou haver uma grande mudança no parametros.
+    Para melhor definição utiza-se const, como o codigo exemplo no App.js.
+
+
+
+*/
 
 
 
